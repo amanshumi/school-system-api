@@ -2,6 +2,7 @@
 
 import { Request, Response } from "express";
 import * as classRoomService from "../services/classRoomService";
+import { handleError } from "../utils";
 
 export const createClassroom = async (req: Request, res: Response) => {
   try {
@@ -14,12 +15,21 @@ export const createClassroom = async (req: Request, res: Response) => {
 
 export const getAllClassrooms = async (req: Request, res: Response) => {
   try {
-    const classrooms = await classRoomService.getClassRoomsBySchool(req.params.schoolId);
+    const classrooms = await classRoomService.getAllClassrooms();
     res.status(200).json({ success: true, data: classrooms });
   } catch (error: unknown) {
     handleError(error, res);
   }
 };  
+
+export const getClassRoomsBySchool = async (req: Request, res: Response) => {
+    try {
+        const classroomBySchool = await classRoomService.getClassRoomsBySchool(req.params?.schoolId);
+        res.status(200).json({success: true, data: classroomBySchool});
+    } catch (error) {
+        handleError(error, res);
+    }
+}
 
 export const getClassroomById = async (req: Request, res: Response) => {
   try {
@@ -45,13 +55,5 @@ export const deleteClassroom = async (req: Request, res: Response) => {
     res.status(204).json({ success: true });
   } catch (error: unknown) {
     handleError(error, res);
-  }
-};
-
-const handleError = (error: unknown, res: Response) => {
-  if (error instanceof Error) {
-    res.status(500).json({ success: false, message: error.message });
-  } else {
-    res.status(500).json({ success: false, message: 'An unknown error occurred' });
   }
 };

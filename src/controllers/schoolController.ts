@@ -1,17 +1,14 @@
 import { Request, Response } from "express";
 import * as schoolService from "../services/schoolService";
 import { ISchool } from "../models/school";
+import { handleError } from "../utils";
 
 export const createSchool = async (req: Request, res: Response) => {
   try {
     const school = await schoolService.createSchool(req.body);
     res.status(201).json({ success: true, data: school });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ success: false, message: error.message });
-    } else {
-      res.status(500).json({ success: false, message: 'An unknown error occurred' });
-    }
+    handleError(error, res);
   }
 };
 
@@ -20,11 +17,7 @@ export const getAllSchools = async (req: Request, res: Response) => {
     const schools = await schoolService.getAllSchools();
     res.status(200).json({ success: true, data: schools });
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(500).json({ success: false, message: error.message });
-    } else {
-      res.status(500).json({ success: false, message: 'An unknown error occurred' });
-    }
+    handleError(error, res);
   }
 };
 
@@ -36,11 +29,43 @@ export const getSchoolById = async (req: Request<{ id: string }>, res: Response)
     }
     res.status(200).json({ success: true, data: school });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ success: false, message: error.message });
+    handleError(error, res);
+  }
+};
+
+export const getSchoolByPhoneNumberController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const school = await schoolService.getSchoolByPhoneNumber(req.params.phoneNumber);
+    if (!school) {
+      res.status(404).json({ message: "School not found" });
     } else {
-      res.status(500).json({ success: false, message: 'An unknown error occurred' });
+      res.status(200).json(school);
     }
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
+export const getSchoolByEmailController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const school = await schoolService.getSchoolByEmail(req.params.email);
+    if (!school) {
+      res.status(404).json({ message: "School not found" });
+    } else {
+      res.status(200).json(school);
+    }
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
+export const getSchoolsEstablishedAfterController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const date = new Date(req.params.date);
+    const schools = await schoolService.getSchoolsEstablishedAfter(date);
+    res.status(200).json(schools);
+  } catch (error) {
+    handleError(error, res);
   }
 };
 
@@ -52,11 +77,7 @@ export const updateSchool = async (req: Request, res: Response): Promise<any> =>
     }
     res.status(200).json({ success: true, data: school });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ success: false, message: error.message });
-    } else {
-      res.status(500).json({ success: false, message: 'An unknown error occurred' });
-    }
+    handleError(error, res);
   }
 };
 
@@ -65,10 +86,6 @@ export const deleteSchool = async (req: Request, res: Response) => {
     await schoolService.deleteSchool(req.params.id);
     res.status(204).send();
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ success: false, message: error.message });
-    } else {
-      res.status(500).json({ success: false, message: 'An unknown error occurred' });
-    }
+    handleError(error, res);
   }
 };

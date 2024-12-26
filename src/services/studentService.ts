@@ -1,8 +1,22 @@
 import { Student } from "../models/student";
 import { IStudent } from "../models/student";
 import mongoose from "mongoose";
+import { getClassRoomById } from "./classRoomService";
+import { getSchoolById } from "./schoolService";
 
 export const enrollStudent = async (studentData: Partial<IStudent>): Promise<IStudent> => {
+  const classRoom = await getClassRoomById(studentData.classroomId || '');
+  const school = await getSchoolById(studentData?.schoolId || '');
+  const studentCheck = await Student.findOne({ studentId: studentData.studentId });
+
+  if (studentCheck) {
+    throw new Error("Student already exists with the same student ID");
+  }
+
+  if (!classRoom || !school) {
+    throw new Error("Classroom or school not found");
+  }
+
   const student = new Student(studentData);
   return await student.save();
 };

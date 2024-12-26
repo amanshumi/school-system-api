@@ -28,24 +28,25 @@ export const getUserById = async (userId: string): Promise<UserResponseDto | nul
     if (!mongoose.Types.ObjectId.isValid(userId)) {
         throw new Error("Invalid user ID");
     }
-    return new UserResponseDto(await User.findById(userId).populate("assignedSchoolId"));
+    return new UserResponseDto(await User.findById(userId).populate("assignedSchoolId") || {});
 };
 
 export const getAllUsers = async (): Promise<UserResponseDto[]> => {
     return (await User.find().populate("assignedSchoolId")).map((user) => new UserResponseDto(user));
 };
 
-export const updateUser = async (userId: string, updateData: Partial<IUser>): Promise<IUser | null> => {
+export const updateUser = async (userId: string, updateData: Partial<IUser>): Promise<UserResponseDto | null> => {
     if (!mongoose.Types.ObjectId.isValid(userId)) {
         throw new Error("Invalid user ID");
     }
 
     if (updateData.password) {
-        const salt = await bcrypt.genSalt(10);
-        updateData.password = await bcrypt.hash(updateData.password, salt);
+        delete updateData?.password;
     }
 
-    return await User.findByIdAndUpdate(userId, updateData, { new: true });
+    console.log("DATA: ", updateData);
+
+    return new UserResponseDto(await User.findByIdAndUpdate(userId, updateData, { new: true }));
 };
 
 export const deleteUser = async (userId: string): Promise<void> => {
@@ -55,10 +56,10 @@ export const deleteUser = async (userId: string): Promise<void> => {
     await User.findByIdAndDelete(userId);
 };
 
-export const authenticateUser = async (email: string, password: string): Promise<IUser | null> => {
+export const authenticateUser = async (email: string, password: string): Promise<UserResponseDto | null> => {
     const user = await User.findOne({ email });
     if (!user) return null;
 
     const isMatch = await bcrypt.compare(password, user.password);
-    return isMatch ? user : null;
+    return isMatch ? new UserResponseDto(user) : null;
 };

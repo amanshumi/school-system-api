@@ -7,6 +7,10 @@ export const createClassRoom = async (ClassRoomData: Partial<IClassRoom>): Promi
   return await classRoom.save();
 };
 
+export const getAllClassrooms = async (): Promise<IClassRoom[]> => {
+    return await ClassRoom.find();
+}
+
 export const getClassRoomsBySchool = async (schoolId: string): Promise<IClassRoom[]> => {
   if (!mongoose.Types.ObjectId.isValid(schoolId)) {
     throw new Error("Invalid school ID");

@@ -4,7 +4,7 @@ export interface IClassRoom extends Document {
     name: string;
     capacity: number;
     resources: string[];
-    schoolId: string; // Associated school
+    schoolId: string;
   }
   
   const ClassRoomSchema: Schema = new Schema(

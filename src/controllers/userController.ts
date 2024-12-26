@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import * as userService from "../services/userService";
+import dotenv from 'dotenv';
 
-export const login = async (req: Request, res: Response) => {
+import * as userService from "../services/userService";
+import { UserLoginDTO } from "../dto";
+
+dotenv.config();
+
+export const login = async (req: Request, res: Response): Promise<any> => {
   try {
     const { email, password } = req.body;
 
@@ -12,13 +17,14 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, role: user.role },
+      { id: user.id, role: user.role },
       process.env.JWT_SECRET!,
       { expiresIn: "1h" }
     );
 
     res.status(200).json({ success: true, token, user });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, message: "Authentication failed" });
   }
 };
