@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as schoolService from "../services/schoolService";
+import schoolService from "../services/schoolService";
 import { handleError } from "../utils/helpers";
 
 export const createSchool = async (req: Request, res: Response) => {
@@ -22,7 +22,7 @@ export const getAllSchools = async (req: Request, res: Response) => {
 
 export const getSchoolsBySuperadmin = async (req: Request, res: Response) => {
   try {
-    const schools = await schoolService.getSchoolsBySuperadmin(req.params.superadminId);
+    const schools = await schoolService.getSchoolsBySuperadmin(req?.user?.id);
     res.status(200).json({ success: true, data: {total: schools.length, schools} });
   } catch (error: unknown) {
     handleError(error, res);

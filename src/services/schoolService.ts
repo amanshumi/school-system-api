@@ -1,80 +1,72 @@
 import { School, ISchool } from "../models/school";
 import mongoose from "mongoose";
-import { getUserById } from "./userService";
 import { ROLES } from "../enums/roles";
+import userService from "./userService";
 
-export const createSchool = async (schoolData: Partial<ISchool>): Promise<ISchool> => {
-  const user = await getUserById(schoolData?.superadminId || '');
-  const schoolExists = await getSchoolByEmail(schoolData?.email || '');
+class SchoolService {
+  async createSchool(schoolData: Partial<ISchool>): Promise<ISchool> {
+    const user = await userService.getUserById(schoolData?.superadminId || "");
+    const schoolExists = await this.getSchoolByEmail(schoolData?.email || "");
 
-  if(schoolExists) {
-    throw new Error('School with this email already exists');
+    if (schoolExists) {
+      throw new Error("School with this email already exists");
+    }
+
+    if (!user) {
+      throw new Error("User not found with this ID");
+    }
+
+    if (user.role !== ROLES.SUPER_ADMIN) {
+      throw new Error("Must provide a valid super admin ID");
+    }
+
+    const school = new School(schoolData);
+    return await school.save();
   }
 
-  if(!user) {
-    throw new Error('User not found with this id')
+  async getAllSchools(): Promise<ISchool[]> {
+    return await School.find();
   }
 
-  if(user.role !== ROLES.SUPER_ADMIN) {
-    throw new Error('Must provide a valid super admin id');
+  async getSchoolsBySuperadmin(superadminId: string): Promise<ISchool[]> {
+    if (!mongoose.Types.ObjectId.isValid(superadminId)) {
+      throw new Error("Invalid superadmin ID");
+    }
+    return await School.find({ superadminId });
   }
 
-  const school = new School(schoolData);
-  return await school.save();
-};
-
-export const getAllSchools = async (): Promise<ISchool[]> => {
-  return await School.find();
-};
-
-export const getSchoolsBySuperadmin = async (superadminId: string): Promise<ISchool[]> => {
-  if (!mongoose.Types.ObjectId.isValid(superadminId)) {
-    throw new Error("Invalid superadmin ID");
+  async getSchoolById(schoolId: string): Promise<ISchool | null> {
+    if (!mongoose.Types.ObjectId.isValid(schoolId)) {
+      throw new Error("Invalid school ID");
+    }
+    return await School.findById(schoolId);
   }
-  return await School.find({ superadminId });
-};
 
-export const getSchoolById = async (schoolId: string): Promise<ISchool | null> => {
-  if (!mongoose.Types.ObjectId.isValid(schoolId)) {
-    throw new Error("Invalid school ID");
-  }
-  return await School.findById(schoolId);
-};
-
-export const getSchoolByPhoneNumber = async (phoneNumber: string): Promise<ISchool[] | null> => {
-  try {
+  async getSchoolByPhoneNumber(phoneNumber: string): Promise<ISchool[] | null> {
     return await School.find({ phoneNumber });
-  } catch (error) {
-    throw new Error(`Error fetching school by phone number`);
   }
-};
 
-export const getSchoolByEmail = async (email: string): Promise<ISchool | null> => {
-  try {
+  async getSchoolByEmail(email: string): Promise<ISchool | null> {
     return await School.findOne({ email });
-  } catch (error) {
-    throw new Error(`Error fetching school by email`);
   }
-};
 
-export const getSchoolsEstablishedAfter = async (date: Date): Promise<ISchool[]> => {
-  try {
+  async getSchoolsEstablishedAfter(date: Date): Promise<ISchool[]> {
     return await School.find({ establishedDate: { $gt: date } });
-  } catch (error) {
-    throw new Error(`Error fetching schools established after date`);
   }
-};
 
-export const updateSchool = async (schoolId: string, updateData: Partial<ISchool>): Promise<ISchool | null> => {
-  if (!mongoose.Types.ObjectId.isValid(schoolId)) {
-    throw new Error("Invalid school ID");
+  async updateSchool(schoolId: string, updateData: Partial<ISchool>): Promise<ISchool | null> {
+    if (!mongoose.Types.ObjectId.isValid(schoolId)) {
+      throw new Error("Invalid school ID");
+    }
+    return await School.findByIdAndUpdate(schoolId, updateData, { new: true });
   }
-  return await School.findByIdAndUpdate(schoolId, updateData, { new: true });
-};
 
-export const deleteSchool = async (schoolId: string): Promise<void> => {
-  if (!mongoose.Types.ObjectId.isValid(schoolId)) {
-    throw new Error("Invalid school ID");
+  async deleteSchool(schoolId: string): Promise<void> {
+    if (!mongoose.Types.ObjectId.isValid(schoolId)) {
+      throw new Error("Invalid school ID");
+    }
+    await School.findByIdAndDelete(schoolId);
   }
-  await School.findByIdAndDelete(schoolId);
-};
+}
+
+export default new SchoolService();

@@ -2,7 +2,6 @@ import express from 'express';
 import { validateRequest } from '../middlewares/requestValidator';
 import { createClassroomSchema, updateClassroomSchema } from '../validations/classRoomValidations';
 import * as classRoomController from '../controllers/classRoomController';
-import { deleteClassRoom } from '../services/classRoomService';
 import { authorize } from '../middlewares/authMiddleware';
 import { ROLES } from '../enums/roles';
 

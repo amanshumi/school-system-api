@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as classRoomService from "../services/classRoomService";
+import classRoomService from "../services/classRoomService";
 import { handleError } from "../utils/helpers";
 
 export const createClassroom = async (req: Request, res: Response) => {
