@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: school-backend
+    restart: always
+    image: school-backend
+    ports:
+      - "7000:7000"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .:/usr/src/app
+    command: npm start
+
+networks:
+  default:
+    driver: bridge

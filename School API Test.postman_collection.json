@@ -1,0 +1,823 @@
+{
+	"info": {
+		"_postman_id": "97d10073-40ea-4642-9915-5c566f07de58",
+		"name": "School API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19338903"
+	},
+	"item": [
+		{
+			"name": "School",
+			"item": [
+				{
+					"name": "Create School",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4MjI4NywiZXhwIjoxNzM1Mjg1ODg3fQ.9et3Oec4nnHstwatqkjEGnhoahbZV9w-APRQksMRS0s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Green Valleyaa High School\",\n  \"address\": {\n    \"street\": \"456 Maple Avenue\",\n    \"city\": \"Springfield\",\n    \"state\": \"Illinois\",\n    \"zipCode\": \"62704\"\n  },\n  \"superadminId\": \"676d973e85e49ec06a22db2f\",\n  \"phoneNumber\": \"9876543210\",\n  \"email\": \"info@greenvalleyhigh.com\",\n  \"website\": \"https://www.greenvalleyhigh.com\",\n  \"establishedDate\": \"1995-09-01\",\n  \"isActive\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/school/",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"school",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update School",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4MjQzOCwiZXhwIjoxNzM1Mjg2MDM4fQ.Tup4D3xGbXXOHRilKgVqY4IUF3GU3iYKWgxW2vG4u1k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Joh\",\n    \"address\": {\"city\": \"456 Str, Newaas York, USA\"},\n    \"email\": \"johnsonschool@gmail.com\",\n    \"superadminId\": \"676e4d13ff6a5781a59aeef3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/school/676d974485e49ec06a22db32",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"school",
+								"676d974485e49ec06a22db32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Schools",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4NjAwMiwiZXhwIjoxNzM1Mjg5NjAyfQ.lRrWMkhpjSOeViBQCiMsNmJtiv2JLzNGTQX2mEx6E88",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/school/",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"school",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Schools By Super Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU2OTU4YTJjYTk4OGZiMzJiYWM2NCIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4OTE4OSwiZXhwIjoxNzM1MjkyNzg5fQ.yGMrLDXT3gTsL-ourtJ2oRXphD41Mj44pSLKauaGAWE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/school/all/superadmin",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"school",
+								"all",
+								"superadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Schools By Phone",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4MjA1NywiZXhwIjoxNzM1Mjg1NjU3fQ.R4TtGIMPMwrSRFQgAXyAhENI6mMOvnVKjK6IA5hh2-A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/school/phone/1",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"school",
+								"phone",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Schools By Email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4MjA1NywiZXhwIjoxNzM1Mjg1NjU3fQ.R4TtGIMPMwrSRFQgAXyAhENI6mMOvnVKjK6IA5hh2-A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/school/email/info@greenvalleyhigh.com",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"school",
+								"email",
+								"info@greenvalleyhigh.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete School",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/school/676d63945405e6daea663ad7",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"school",
+								"676d63945405e6daea663ad7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get School Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU2OTU4YTJjYTk4OGZiMzJiYWM2NCIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4OTE4OSwiZXhwIjoxNzM1MjkyNzg5fQ.yGMrLDXT3gTsL-ourtJ2oRXphD41Mj44pSLKauaGAWE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/school/676d63945405e6daea663ad7",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"school",
+								"676d63945405e6daea663ad7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4ODk4MCwiZXhwIjoxNzM1MjkyNTgwfQ.pHBvxg5Ktz8Ou5iqmsFbPGb1uaV7Wfeobq7RmuP7YlU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"alexa\",\n    \"email\": \"alexa@gmail.com\",\n    \"password\": \"password\",\n    \"role\": \"super admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/user/",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"alexa\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/user/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"alexlaksl\",\n    \"email\": \"sa@gmail.com\",\n    \"password\": \"password\",\n    \"role\": \"school admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/user/676d5a5c4821614309ad5f5d",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"676d5a5c4821614309ad5f5d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/user/676d5a5c4821614309ad5f5d",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"676d5a5c4821614309ad5f5d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4MjA1NywiZXhwIjoxNzM1Mjg1NjU3fQ.R4TtGIMPMwrSRFQgAXyAhENI6mMOvnVKjK6IA5hh2-A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/user/",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/user/676d213bf82e0b1bc1e65405",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"676d213bf82e0b1bc1e65405"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Classroom",
+			"item": [
+				{
+					"name": "Get Classroom By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4MjQzOCwiZXhwIjoxNzM1Mjg2MDM4fQ.Tup4D3xGbXXOHRilKgVqY4IUF3GU3iYKWgxW2vG4u1k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/class-room/676d6ce379cc4f0eb520a54b",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"class-room",
+								"676d6ce379cc4f0eb520a54b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Classroom By School ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/class-room/school/676d63ac5405e6daea663adb",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"class-room",
+								"school",
+								"676d63ac5405e6daea663adb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Classrooms",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmQyMTNiZjgyZTBiMWJjMWU2NTQwNSIsInJvbGUiOiJzY2hvb2wgYWRtaW4iLCJpYXQiOjE3MzUyODg3ODYsImV4cCI6MTczNTI5MjM4Nn0.dKzHfbdVgcJ41ktAcANpcA6R9yWxtWtDZqKTY08hhk4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/class-room",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"class-room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Classroom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4NjAwMiwiZXhwIjoxNzM1Mjg5NjAyfQ.lRrWMkhpjSOeViBQCiMsNmJtiv2JLzNGTQX2mEx6E88",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"class 2\",\n    \"capacity\": 200,\n    \"resources\": [\n        \"tessst\",\n        \"test\"\n    ],\n    \"schoolId\": \"676d974485e49ec06a22db32\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/class-room/",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"class-room",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Classroom",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"class new\",\n    \"capacity\": 100,\n    \"resources\": [\n        \"ksdjk\",\n        \"skdjksjd\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/class-room/676d6ce379cc4f0eb520a54b",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"class-room",
+								"676d6ce379cc4f0eb520a54b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Classroom",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/class-room/676d6ed2d09041b87503e732",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"class-room",
+								"676d6ed2d09041b87503e732"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "Create Student",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4NjAwMiwiZXhwIjoxNzM1Mjg5NjAyfQ.lRrWMkhpjSOeViBQCiMsNmJtiv2JLzNGTQX2mEx6E88",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doea\",\n  \"dateOfBirth\": \"2010-05-15\",\n  \"motherName\": \"Jane Doe\",\n  \"studentId\": \"ST1213a45\",\n  \"grade\": 7,\n  \"schoolId\": \"676d974485e49ec06a22db32\",\n  \"classroomId\": \"676e5dfef0e37fd51b41b830\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"1234567890\",\n  \"address\": {\n    \"street\": \"123 Elm Street\",\n    \"city\": \"Springfield\",\n    \"state\": \"Illinois\",\n    \"zipCode\": \"62704\"\n  },\n  \"enrollmentDate\": \"2023-08-01\",\n  \"isActive\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/student",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Students By Classroom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4MjQzOCwiZXhwIjoxNzM1Mjg2MDM4fQ.Tup4D3xGbXXOHRilKgVqY4IUF3GU3iYKWgxW2vG4u1k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/student/classroom/676d76ab71ffc8585aefaac6",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"student",
+								"classroom",
+								"676d76ab71ffc8585aefaac6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Students By School",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmU0ZDEzZmY2YTU3ODFhNTlhZWVmMyIsInJvbGUiOiJzdXBlciBhZG1pbiIsImlhdCI6MTczNTI4MjQzOCwiZXhwIjoxNzM1Mjg2MDM4fQ.Tup4D3xGbXXOHRilKgVqY4IUF3GU3iYKWgxW2vG4u1k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/student/school/676d63ac5405e6daea663adb",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"student",
+								"school",
+								"676d63ac5405e6daea663adb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Students By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/student/676d98b7e35e126de1c387ff",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"student",
+								"676d98b7e35e126de1c387ff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer Student",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newClassroomId\": \"676e459f179e4856b1cc8c00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/student/676d98b7e35e126de1c387ff/transfer",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"student",
+								"676d98b7e35e126de1c387ff",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classroomId\": \"676e459f179e4856b1cc8c00\",\n    \"motherName\": \"Jeanny\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7000/student/676d98b7e35e126de1c387ff",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"student",
+								"676d98b7e35e126de1c387ff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/student/676d98b7e35e126de1c387ff",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"student",
+								"676d98b7e35e126de1c387ff"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reporting",
+			"item": [
+				{
+					"name": "Get Summary Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmQyMTNiZjgyZTBiMWJjMWU2NTQwNSIsInJvbGUiOiJzY2hvb2wgYWRtaW4iLCJpYXQiOjE3MzUyODYzMzUsImV4cCI6MTczNTI4OTkzNX0.mPFGssEVkrnpQklEQwArzOHp9U-vTlGE-U5vsGC0VeQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/reports/summary",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"reports",
+								"summary"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
