@@ -12,6 +12,7 @@ schoolRouter.get('/', schoolController.getAllSchools);
 schoolRouter.get('/all/superadmin', authorize([ROLES.SUPER_ADMIN]), schoolController.getSchoolsBySuperadmin);
 schoolRouter.get('/phone/:phone', schoolController.getSchoolsByPhoneNumber);
 schoolRouter.get('/email/:email', schoolController.getSchoolByEmail);
+schoolRouter.get('/date/:date', schoolController.getSchoolsCreatedAfter);
 schoolRouter.get('/:id', authorize([ROLES.SUPER_ADMIN]), schoolController.getSchoolById);
 schoolRouter.put('/:id', authorize([ROLES.SUPER_ADMIN]), validateRequest(updateSchoolSchema), schoolController.updateSchool);
 schoolRouter.delete('/:id', authorize([ROLES.SUPER_ADMIN]), schoolController.deleteSchool);

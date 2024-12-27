@@ -67,10 +67,10 @@ export const getSchoolByEmail = async (req: Request, res: Response): Promise<voi
   }
 };
 
-export const getSchoolsEstablishedAfter = async (req: Request, res: Response): Promise<void> => {
+export const getSchoolsCreatedAfter = async (req: Request, res: Response): Promise<void> => {
   try {
     const date = new Date(req.params.date);
-    const schools = await schoolService.getSchoolsEstablishedAfter(date);
+    const schools = await schoolService.getSchoolsCreatedAfter(date);
     res.status(200).json({success: true, data: {total: schools.length, schools: schools}});
   } catch (error) {
     handleError(error, res);

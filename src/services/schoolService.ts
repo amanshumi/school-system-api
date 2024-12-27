@@ -50,8 +50,8 @@ class SchoolService {
     return await School.findOne({ email });
   }
 
-  async getSchoolsEstablishedAfter(date: Date): Promise<ISchool[]> {
-    return await School.find({ establishedDate: { $gt: date } });
+  async getSchoolsCreatedAfter(date: Date): Promise<ISchool[]> {
+    return await School.find({ createdAt: { $gt: new Date(date) } });
   }
 
   async updateSchool(schoolId: string, updateData: Partial<ISchool>): Promise<ISchool | null> {

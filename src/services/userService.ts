@@ -81,10 +81,12 @@ class UserService {
 
   async authenticateUser(username: string, password: string): Promise<UserResponseDto | null> {
     const user = await User.findOne({ username });
-    if (!user) return null;
+    if (!user) throw new Error("User not found");
 
     const isMatch = await bcrypt.compare(password, user.password);
-    return isMatch ? new UserResponseDto(user) : null;
+
+    if (!isMatch) throw new Error("Invalid credentials");
+    return new UserResponseDto(user);
   }
 }
 
