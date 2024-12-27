@@ -9,8 +9,8 @@ import studentRouter from "./routes/student";
 import userRouter from "./routes/user";
 import reportingRouter from "./routes/reporting";
 
-import { authenticate } from "./middlewares/authMiddleware";
-import { apiLimiter } from "./utils/helpers";
+import authMiddleware from "./middlewares/authMiddleware";
+import helpers from "./utils/helpers";
 import userService from "./services/userService";
 
 dotenv.config();
@@ -29,8 +29,8 @@ class Server {
 
   private initializeMiddlewares(): void {
     this.app.use(express.json());
-    this.app.use(authenticate);
-    this.app.use(apiLimiter);
+    this.app.use(authMiddleware.authenticate);
+    this.app.use(helpers.apiLimiter);
   }
 
   private initializeRoutes(): void {

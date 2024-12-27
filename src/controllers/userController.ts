@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 import userService from "../services/userService";
+import helpers from "../utils/helpers";
 
 dotenv.config();
 
@@ -14,16 +15,11 @@ export const login = async (req: Request, res: Response): Promise<any> => {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    const token = jwt.sign(
-      { id: user.id, role: user.role },
-      process.env.JWT_SECRET!,
-      { expiresIn: "1h" }
-    );
+    const token = helpers.generateToken(user);
 
     res.status(200).json({ success: true, token, user });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Authentication failed" });
+    helpers.handleError(error, res);
   }
 };
 
@@ -32,7 +28,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     const user = await userService.createUser(req.body);
     res.status(201).json({ success: true, data: user });
   } catch (error) {
-    res.status(400).json({ success: false, message: error instanceof Error ? error.message : "Error creating user" });
+    helpers.handleError(error, res);
   }
 };
 
@@ -44,7 +40,7 @@ export const getUserById = async (req: Request<{id: string}>, res: Response): Pr
     }
     res.status(200).json({ success: true, data: user });
   } catch (error) {
-    res.status(400).json({ success: false, message: error instanceof Error ? error.message : "Error fetching user" });
+    helpers.handleError(error, res);
   }
 };
 
@@ -53,7 +49,7 @@ export const getAllUsers = async (req: Request, res: Response): Promise<void> =>
     const users = await userService.getAllUsers();
     res.status(200).json({ success: true, data: users });
   } catch (error) {
-    res.status(500).json({ success: false, message: error instanceof Error ? error.message : "Error fetching users" });
+    helpers.handleError(error, res);
   }
 };
 
@@ -65,7 +61,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
     }
     res.status(200).json({ success: true, data: user });
   } catch (error) {
-    res.status(400).json({ success: false, message: error instanceof Error ? error.message : "Error updating user" });
+    helpers.handleError(error, res);
   }
 };
 

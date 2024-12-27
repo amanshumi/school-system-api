@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import schoolService from "../services/schoolService";
-import { handleError } from "../utils/helpers";
+import helpers from "../utils/helpers";
 
 export const createSchool = async (req: Request, res: Response) => {
   try {
     const school = await schoolService.createSchool(req.body);
     res.status(201).json({ success: true, data: school });
   } catch (error) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 };
 
@@ -16,7 +16,7 @@ export const getAllSchools = async (req: Request, res: Response) => {
     const schools = await schoolService.getAllSchools();
     res.status(200).json({ success: true, data: {total: schools.length, schools} });
   } catch (error: unknown) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 };
 
@@ -25,7 +25,7 @@ export const getSchoolsBySuperadmin = async (req: Request, res: Response) => {
     const schools = await schoolService.getSchoolsBySuperadmin(req?.user?.id);
     res.status(200).json({ success: true, data: {total: schools.length, schools} });
   } catch (error: unknown) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 }
 
@@ -37,7 +37,7 @@ export const getSchoolById = async (req: Request<{ id: string }>, res: Response)
     }
     res.status(200).json({ success: true, data: school });
   } catch (error) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 };
 
@@ -50,7 +50,7 @@ export const getSchoolsByPhoneNumber = async (req: Request, res: Response): Prom
       res.status(200).json({success: true, data: {total: school.length, school: school}});
     }
   } catch (error) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 };
 
@@ -63,7 +63,7 @@ export const getSchoolByEmail = async (req: Request, res: Response): Promise<voi
       res.status(200).json(school);
     }
   } catch (error) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 };
 
@@ -73,7 +73,7 @@ export const getSchoolsCreatedAfter = async (req: Request, res: Response): Promi
     const schools = await schoolService.getSchoolsCreatedAfter(date);
     res.status(200).json({success: true, data: {total: schools.length, schools: schools}});
   } catch (error) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 };
 
@@ -85,7 +85,7 @@ export const updateSchool = async (req: Request, res: Response): Promise<any> =>
     }
     res.status(200).json({ success: true, data: school });
   } catch (error) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 };
 
@@ -94,6 +94,6 @@ export const deleteSchool = async (req: Request, res: Response) => {
     await schoolService.deleteSchool(req.params.id);
     res.status(204).send();
   } catch (error) {
-    handleError(error, res);
+    helpers.handleError(error, res);
   }
 };
