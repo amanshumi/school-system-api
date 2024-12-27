@@ -61,4 +61,13 @@ Build the docker image:
 ```sh
 docker compose up -d
 
+## Running The Unit Tests
+
+Run the tests with jest library
+```bash
+npm test
+
+## Working With The Postman Collection
+
+In order to test the API Endpoints, you need to login as a super admin first to create the schools. Get the credentials from the environment variables labelled as 'SUPERADMIN_USERNAME' and 'SUPERADMIN_PASSWORD' to login for the first time as a super admin user. Then, you will be able to continue with making the API calls for the rest of the operations.
 
