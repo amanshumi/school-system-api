@@ -14,6 +14,7 @@ User authentication and authorization
 - Node.js (version 20 or higher)
 - npm (version 10 or higher)
 - Docker (optional, for containerized deployment)## Installation
+- MongoDB database setup, either locally or on MongoDB Atlas cloud environment
 
 ## Installation
 
