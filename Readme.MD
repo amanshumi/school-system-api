@@ -66,6 +66,7 @@ docker compose up -d
 Run the tests with jest library
 ```bash
 npm test
+```
 
 ## Working With The Postman Collection
 
