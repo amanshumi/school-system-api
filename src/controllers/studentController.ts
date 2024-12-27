@@ -1,5 +1,3 @@
-// src/controllers/studentController.ts
-
 import { Request, Response } from "express";
 import * as studentService from "../services/studentService";
 

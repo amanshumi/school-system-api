@@ -1,12 +1,9 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
-
 import * as userService from "../services/userService";
-import { UserLoginDTO } from "../dto";
 
 dotenv.config();
-
 
 export const login = async (req: Request, res: Response): Promise<any> => {
   try {

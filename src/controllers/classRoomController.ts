@@ -1,5 +1,3 @@
-// src/controllers/classRoomController.ts
-
 import { Request, Response } from "express";
 import * as classRoomService from "../services/classRoomService";
 import { handleError } from "../utils/helpers";

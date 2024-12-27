@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import * as schoolService from "../services/schoolService";
-import { ISchool } from "../models/school";
 import { handleError } from "../utils/helpers";
 
 export const createSchool = async (req: Request, res: Response) => {
