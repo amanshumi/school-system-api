@@ -13,4 +13,21 @@ const connectDB = async (): Promise<Mongoose> => {
     return await mongoose.connect(mongoURI);
 };
 
+mongoose.connection.on("connected", () => {
+    console.log("MongoDB connected");
+});
+
+mongoose.connection.on("disconnected", () => {
+    console.log("MongoDB disconnected");
+});
+
+mongoose.connection.on("error", (error) => {
+    console.error("MongoDB connection error:", error);
+});
+
+process.on("SIGINT", async () => {
+    await mongoose.connection.close();
+    process.exit(0);
+});
+
 export default connectDB;

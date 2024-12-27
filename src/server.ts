@@ -48,7 +48,6 @@ class Server {
   public async start(): Promise<void> {
     try {
       await this.connectToDatabase();
-      console.log("Connected to DB");
 
       userService.initializeSuperadmin();
 

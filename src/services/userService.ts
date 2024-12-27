@@ -1,5 +1,5 @@
 import { User, IUser } from "../models/user";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 import { UserResponseDto } from "../dto";
 import { ROLES } from "../enums/roles";
