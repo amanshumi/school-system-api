@@ -2,13 +2,15 @@ import express, { Router } from 'express';
 import * as schoolController from '../controllers/schoolController';
 import { validateRequest } from '../middlewares/requestValidator';
 import { createSchoolSchema, updateSchoolSchema } from '../validations/schoolValidation';
+import { authorize } from '../middlewares/authMiddleware';
+import { ROLES } from '../enums/roles';
 
 const schoolRouter = express.Router();
 
-schoolRouter.post('/', validateRequest(createSchoolSchema), schoolController.createSchool);
+schoolRouter.post('/', authorize([ROLES.SUPER_ADMIN]), validateRequest(createSchoolSchema), schoolController.createSchool);
 schoolRouter.get('/', schoolController.getAllSchools);
-schoolRouter.get('/:id', schoolController.getSchoolById);
-schoolRouter.put('/:id', validateRequest(updateSchoolSchema), schoolController.updateSchool);
-schoolRouter.delete('/:id', schoolController.deleteSchool);
+schoolRouter.get('/:id', authorize([ROLES.SUPER_ADMIN]), schoolController.getSchoolById);
+schoolRouter.put('/:id', authorize([ROLES.SUPER_ADMIN]), validateRequest(updateSchoolSchema), schoolController.updateSchool);
+schoolRouter.delete('/:id', authorize([ROLES.SUPER_ADMIN]), schoolController.deleteSchool);
 
 export default schoolRouter;

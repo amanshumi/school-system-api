@@ -1,10 +1,18 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { TO_IGNORE_PATHS } from "../utils/constants";
 
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
+export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers.authorization?.split(" ")[1];
+  
+  if(TO_IGNORE_PATHS.includes(req.path)) {
+    next();
+    return;
+  }
+
   if (!token) {
-    return res.status(401).json({ success: false, message: "Access denied. No token provided." });
+    res.status(401).json({ success: false, message: "Unauthorized." });
+    return;
   }
 
   try {
@@ -16,8 +24,8 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-export const authorize = (roles: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+export const authorize = (roles: string[]): any => {
+ return (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;
     if (!roles.includes(user.role)) {
       return res.status(403).json({ success: false, message: "Access denied" });

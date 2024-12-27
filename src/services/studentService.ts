@@ -22,6 +22,7 @@ export const enrollStudent = async (studentData: Partial<IStudent>): Promise<ISt
 };
 
 export const transferStudent = async (studentId: string, newClassroomId: string): Promise<IStudent | null> => {
+  console.log("ID: ", studentId, newClassroomId);
   if (!mongoose.Types.ObjectId.isValid(studentId) || !mongoose.Types.ObjectId.isValid(newClassroomId)) {
     throw new Error("Invalid ID(s)");
   }
@@ -42,7 +43,6 @@ export const getStudentById = async (studentId: string): Promise<IStudent | null
   return await Student.findById(studentId);
 };
 
-// get student by schoolId
 export const getStudentsBySchool = async (schoolId: string): Promise<IStudent[]> => {
   if (!mongoose.Types.ObjectId.isValid(schoolId)) {
     throw new Error("Invalid school ID");

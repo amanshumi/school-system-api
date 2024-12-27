@@ -22,7 +22,7 @@ export const enrollStudentSchema = Joi.object({
 });
 
 export const transferStudentSchema = Joi.object({
-  classroomId: Joi.string().required(),
+  newClassroomId: Joi.string().required()
 });
 
 export const updateStudentSchema = Joi.object({

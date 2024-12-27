@@ -2,6 +2,44 @@ import { User, IUser } from "../models/user";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { UserResponseDto } from "../dto";
+import { ROLES } from "../enums/roles";
+
+export const initializeSuperadmin = async (): Promise<void> => {
+  try {
+    const superadminExists = await User.findOne({ role: ROLES.SUPER_ADMIN });
+
+    if (superadminExists) {
+      console.log("Superadmin already exists. Skipping initialization.");
+      return;
+    }
+
+    const superadminEmail = process.env.SUPERADMIN_EMAIL;
+    const superadminUsername = process.env.SUPERADMIN_USERNAME;
+    const superadminPassword = process.env.SUPERADMIN_PASSWORD;
+
+    if (!superadminEmail || !superadminUsername || !superadminPassword) {
+      console.error("Superadmin credentials are not set in environment variables.");
+      process.exit(1);
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(superadminPassword, salt);
+
+    const superadmin = new User({
+      username: superadminUsername,
+      email: superadminEmail,
+      password: hashedPassword,
+      role: ROLES.SUPER_ADMIN,
+    });
+
+    await superadmin.save();
+
+    console.log("Superadmin created successfully.");
+  } catch (error) {
+    console.error("Error initializing Superadmin:", error);
+    process.exit(1);
+  }
+};
 
 export const createUser = async (userData: Partial<IUser>): Promise<UserResponseDto> => {
     const userExists = await User.findOne({
@@ -56,8 +94,8 @@ export const deleteUser = async (userId: string): Promise<void> => {
     await User.findByIdAndDelete(userId);
 };
 
-export const authenticateUser = async (email: string, password: string): Promise<UserResponseDto | null> => {
-    const user = await User.findOne({ email });
+export const authenticateUser = async (username: string, password: string): Promise<UserResponseDto | null> => {
+    const user = await User.findOne({ username });
     if (!user) return null;
 
     const isMatch = await bcrypt.compare(password, user.password);

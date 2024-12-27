@@ -7,11 +7,12 @@ import { UserLoginDTO } from "../dto";
 
 dotenv.config();
 
+
 export const login = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    const user = await userService.authenticateUser(email, password);
+    const user = await userService.authenticateUser(username, password);
     if (!user) {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
