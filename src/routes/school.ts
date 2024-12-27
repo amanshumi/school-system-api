@@ -5,16 +5,58 @@ import { createSchoolSchema, updateSchoolSchema } from '../validations/schoolVal
 import authMiddleware from '../middlewares/authMiddleware';
 import { ROLES } from '../enums/roles';
 
-const schoolRouter = express.Router();
+class SchoolRoutes {
+    router: Router;
+    constructor() {
+        this.router = express.Router();
+        this.initializeRoutes();
+    }
 
-schoolRouter.post('/', authMiddleware.authorize([ROLES.SUPER_ADMIN]), helpers.validateRequest(createSchoolSchema), schoolController.createSchool);
-schoolRouter.get('/', schoolController.getAllSchools);
-schoolRouter.get('/all/superadmin', authMiddleware.authorize([ROLES.SUPER_ADMIN]), schoolController.getSchoolsBySuperadmin);
-schoolRouter.get('/phone/:phone', schoolController.getSchoolsByPhoneNumber);
-schoolRouter.get('/email/:email', schoolController.getSchoolByEmail);
-schoolRouter.get('/date/:date', schoolController.getSchoolsCreatedAfter);
-schoolRouter.get('/:id', authMiddleware.authorize([ROLES.SUPER_ADMIN]), schoolController.getSchoolById);
-schoolRouter.put('/:id', authMiddleware.authorize([ROLES.SUPER_ADMIN]), helpers.validateRequest(updateSchoolSchema), schoolController.updateSchool);
-schoolRouter.delete('/:id', authMiddleware.authorize([ROLES.SUPER_ADMIN]), schoolController.deleteSchool);
+    initializeRoutes() {
+        this.router.post(
+            '/',
+            authMiddleware.authorize([ROLES.SUPER_ADMIN]),
+            helpers.validateRequest(createSchoolSchema),
+            schoolController.createSchool
+        );
 
-export default schoolRouter;
+        this.router.get('/', schoolController.getAllSchools);
+
+        this.router.get(
+            '/all/superadmin',
+            authMiddleware.authorize([ROLES.SUPER_ADMIN]),
+            schoolController.getSchoolsBySuperadmin
+        );
+
+        this.router.get('/phone/:phone', schoolController.getSchoolsByPhoneNumber);
+
+        this.router.get('/email/:email', schoolController.getSchoolByEmail);
+
+        this.router.get('/date/:date', schoolController.getSchoolsCreatedAfter);
+
+        this.router.get(
+            '/:id',
+            authMiddleware.authorize([ROLES.SUPER_ADMIN]),
+            schoolController.getSchoolById
+        );
+
+        this.router.put(
+            '/:id',
+            authMiddleware.authorize([ROLES.SUPER_ADMIN]),
+            helpers.validateRequest(updateSchoolSchema),
+            schoolController.updateSchool
+        );
+
+        this.router.delete(
+            '/:id',
+            authMiddleware.authorize([ROLES.SUPER_ADMIN]),
+            schoolController.deleteSchool
+        );
+    }
+
+    getRouter() {
+        return this.router;
+    }
+}
+
+export default new SchoolRoutes().getRouter();

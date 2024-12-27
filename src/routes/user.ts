@@ -1,17 +1,27 @@
-import express from "express";
+import express, { Router } from "express";
 import * as userController from "../controllers/userController";
 import authMiddleware from "../middlewares/authMiddleware";
 import helpers from "../utils/helpers";
 import { createUserSchema, loginSchema } from "../validations/userValidation";
 import { ROLES } from "../enums/roles";
 
-const userRouter = express.Router();
+class UserRoutes {
+    router: Router;
+    constructor() {
+        this.router = express.Router();
+        this.initializeRoutes();
+    }
+    initializeRoutes() {
+        this.router.post("/", authMiddleware.authorize([ROLES.SUPER_ADMIN]), helpers.validateRequest(createUserSchema), userController.createUser);
+        this.router.post("/auth/login", helpers.validateRequest(loginSchema), userController.login);
+        this.router.get("/", authMiddleware.authorize([ROLES.SUPER_ADMIN]), userController.getAllUsers);
+        this.router.get("/:id", authMiddleware.authorize([ROLES.SUPER_ADMIN]), userController.getUserById);
+        this.router.put("/:id", authMiddleware.authorize([ROLES.SUPER_ADMIN]), userController.updateUser);
+        this.router.delete("/:id", authMiddleware.authorize([ROLES.SUPER_ADMIN]), userController.deleteUser);
+    }
+    getRouter() {
+        return this.router;
+    }
+}
 
-userRouter.post("/", authMiddleware.authorize([ROLES.SUPER_ADMIN]), helpers.validateRequest(createUserSchema), userController.createUser);
-userRouter.post("/auth/login", helpers.validateRequest(loginSchema), userController.login);
-userRouter.get("/", authMiddleware.authorize([ROLES.SUPER_ADMIN]), userController.getAllUsers);
-userRouter.get("/:id", authMiddleware.authorize([ROLES.SUPER_ADMIN]), userController.getUserById);
-userRouter.put("/:id", authMiddleware.authorize([ROLES.SUPER_ADMIN]), userController.updateUser);
-userRouter.delete("/:id", authMiddleware.authorize([ROLES.SUPER_ADMIN]), userController.deleteUser);
-
-export default userRouter;
+export default new UserRoutes().getRouter();

@@ -1,21 +1,31 @@
 
-import express from "express";
+import express, { Router } from "express";
 import * as studentController from "../controllers/studentController";
 import helpers from "../utils/helpers";
 import { enrollStudentSchema, transferStudentSchema, updateStudentSchema } from "../validations/studentValidations";
 import authMiddleware from "../middlewares/authMiddleware";
 import { ROLES } from "../enums/roles";
 
-const studentRouter = express.Router();
+class StudentRouter {
+    router: Router;
+    constructor() {
+        this.router = express.Router();
+        this.router.use(authMiddleware.authorize([ROLES.SCHOOL_ADMIN, ROLES.SUPER_ADMIN]));
+        this.initializeRoutes();
+    }
+    initializeRoutes() {
+        this.router.post("/", helpers.validateRequest(enrollStudentSchema), studentController.enrollStudent);
+        this.router.put("/:id/transfer", helpers.validateRequest(transferStudentSchema), studentController.transferStudent);
+        this.router.delete("/:id", studentController.deleteStudent);
+        this.router.put("/:id", helpers.validateRequest(updateStudentSchema), studentController.updateStudent);
+        this.router.get("/school/:schoolId", studentController.getStudentsBySchool);
+        this.router.get("/:id", studentController.getStudentById);
+        this.router.get("/classroom/:classroomId", studentController.getAllStudentsByClassroom);
+    }
 
-studentRouter.use(authMiddleware.authorize([ROLES.SCHOOL_ADMIN, ROLES.SUPER_ADMIN]));
+    getRouter() {
+        return this.router;
+    }
+}
 
-studentRouter.post("/", helpers.validateRequest(enrollStudentSchema), studentController.enrollStudent);
-studentRouter.put("/:id/transfer", helpers.validateRequest(transferStudentSchema), studentController.transferStudent);
-studentRouter.delete("/:id", studentController.deleteStudent);
-studentRouter.put("/:id", helpers.validateRequest(updateStudentSchema), studentController.updateStudent);
-studentRouter.get("/school/:schoolId", studentController.getStudentsBySchool);
-studentRouter.get("/:id", studentController.getStudentById);
-studentRouter.get("/classroom/:classroomId", studentController.getAllStudentsByClassroom);
-
-export default studentRouter;
+export default new StudentRouter().getRouter();
