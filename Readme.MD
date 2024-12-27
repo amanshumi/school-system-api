@@ -11,8 +11,8 @@ User authentication and authorization
 
 ## Prerequisites
 
-- Node.js (version 14 or higher)
-- npm (version 6 or higher)
+- Node.js (version 18 or higher)
+- npm (version 9 or higher)
 - Docker (optional, for containerized deployment)## Installation
 
 #### 1. Clone the repository:
@@ -20,10 +20,11 @@ User authentication and authorization
    ```sh
    git clone https://github.com/yourusername/school-system-api.git
    cd school-system-api 
+   ```
    
 
 #### 2. Install dependencies:
-  ```sh
+```
   npm install
   ```
 #### 3. Create a .env file in the root directory and add the following environment variables:
