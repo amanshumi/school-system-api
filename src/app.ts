@@ -9,6 +9,7 @@ import studentRouter from "./routes/student";
 import userRouter from "./routes/user";
 import { authenticate } from "./middlewares/authMiddleware";
 import { initializeSuperadmin } from "./services/userService";
+import reportingRouter from "./routes/reporting";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use('/student', studentRouter);
 app.use('/class-room', classRoomRouter);
 app.use('/school', schoolRouter);
 app.use('/user', userRouter);
+app.use('/reports', reportingRouter);
 
 connectDB().then((connection: Mongoose) => {
     console.log('Connected to DB');

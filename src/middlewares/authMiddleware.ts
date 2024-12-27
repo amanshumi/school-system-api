@@ -1,6 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { TO_IGNORE_PATHS } from "../utils/constants";
+import { IUser } from "../models/user";
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: IUser;
+    }
+  }
+}
 
 export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers.authorization?.split(" ")[1];

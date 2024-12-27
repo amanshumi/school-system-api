@@ -15,11 +15,20 @@ export const createSchool = async (req: Request, res: Response) => {
 export const getAllSchools = async (req: Request, res: Response) => {
   try {
     const schools = await schoolService.getAllSchools();
-    res.status(200).json({ success: true, data: schools });
+    res.status(200).json({ success: true, data: {total: schools.length, schools} });
   } catch (error: unknown) {
     handleError(error, res);
   }
 };
+
+export const getSchoolsBySuperadmin = async (req: Request, res: Response) => {
+  try {
+    const schools = await schoolService.getSchoolsBySuperadmin(req.params.superadminId);
+    res.status(200).json({ success: true, data: {total: schools.length, schools} });
+  } catch (error: unknown) {
+    handleError(error, res);
+  }
+}
 
 export const getSchoolById = async (req: Request<{ id: string }>, res: Response): Promise<any> => {
   try {
@@ -33,20 +42,20 @@ export const getSchoolById = async (req: Request<{ id: string }>, res: Response)
   }
 };
 
-export const getSchoolByPhoneNumberController = async (req: Request, res: Response): Promise<void> => {
+export const getSchoolsByPhoneNumber = async (req: Request, res: Response): Promise<void> => {
   try {
-    const school = await schoolService.getSchoolByPhoneNumber(req.params.phoneNumber);
+    const school = await schoolService.getSchoolByPhoneNumber(req.params.phone);
     if (!school) {
       res.status(404).json({ message: "School not found" });
     } else {
-      res.status(200).json(school);
+      res.status(200).json({success: true, data: {total: school.length, school: school}});
     }
   } catch (error) {
     handleError(error, res);
   }
 };
 
-export const getSchoolByEmailController = async (req: Request, res: Response): Promise<void> => {
+export const getSchoolByEmail = async (req: Request, res: Response): Promise<void> => {
   try {
     const school = await schoolService.getSchoolByEmail(req.params.email);
     if (!school) {
@@ -59,11 +68,11 @@ export const getSchoolByEmailController = async (req: Request, res: Response): P
   }
 };
 
-export const getSchoolsEstablishedAfterController = async (req: Request, res: Response): Promise<void> => {
+export const getSchoolsEstablishedAfter = async (req: Request, res: Response): Promise<void> => {
   try {
     const date = new Date(req.params.date);
     const schools = await schoolService.getSchoolsEstablishedAfter(date);
-    res.status(200).json(schools);
+    res.status(200).json({success: true, data: {total: schools.length, schools: schools}});
   } catch (error) {
     handleError(error, res);
   }

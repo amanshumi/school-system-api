@@ -27,6 +27,13 @@ export const getAllSchools = async (): Promise<ISchool[]> => {
   return await School.find();
 };
 
+export const getSchoolsBySuperadmin = async (superadminId: string): Promise<ISchool[]> => {
+  if (!mongoose.Types.ObjectId.isValid(superadminId)) {
+    throw new Error("Invalid superadmin ID");
+  }
+  return await School.find({ superadminId });
+};
+
 export const getSchoolById = async (schoolId: string): Promise<ISchool | null> => {
   if (!mongoose.Types.ObjectId.isValid(schoolId)) {
     throw new Error("Invalid school ID");
@@ -34,9 +41,9 @@ export const getSchoolById = async (schoolId: string): Promise<ISchool | null> =
   return await School.findById(schoolId);
 };
 
-export const getSchoolByPhoneNumber = async (phoneNumber: string): Promise<ISchool | null> => {
+export const getSchoolByPhoneNumber = async (phoneNumber: string): Promise<ISchool[] | null> => {
   try {
-    return await School.findOne({ phoneNumber });
+    return await School.find({ phoneNumber });
   } catch (error) {
     throw new Error(`Error fetching school by phone number`);
   }
