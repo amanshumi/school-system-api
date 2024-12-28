@@ -58,13 +58,14 @@ Start the server in dev
 #### 2. Docker
 
 Build the docker image:
-```sh
+```bash
 docker compose up -d
+````
 
 ## Running The Unit Tests
 
 Run the tests with jest library
-```bash
+```
 npm test
 ```
 
